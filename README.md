@@ -4,17 +4,39 @@ A comprehensive full-stack fitness management platform with AI-powered features,
 
 ## 🌟 Features
 
+### 🆕 Latest Updates (September 2025)
+- **AI-Powered Chatbot Recommendations**: Chatbot now generates executable meal and workout recommendations
+- **Daily Calorie Counter**: Real-time tracking of daily calorie intake with macronutrient breakdown
+- **Auto-Refresh**: Screens automatically refresh when navigating to show latest data
+- **Action Buttons**: One-click execution of AI recommendations directly from chatbot
+- **Brazilian Portuguese Support**: Meal recommendations with authentic Brazilian recipe names
+- **Enhanced Error Handling**: Comprehensive exception handling with detailed error messages
+- **Improved Rate Limiting**: 20 recommendations per hour with proper rate limit exceptions
+
 ### Core Functionality
 - **User Management**: Complete user registration, authentication, and profile management
 - **USDA Food Database**: Search and track meals using real food data from USDA with intelligent caching and rate limiting
+- **Daily Nutrition Tracking**:
+  - Real-time calorie counter with daily totals
+  - Macronutrient breakdown (carbs, protein, fat)
+  - Visual progress indicators
+  - Auto-refresh on screen focus
 - **Exercise Tracking**: Record workouts, exercises, and custom fitness activities with calorie estimation
 - **Weight Tracking**: Visual weight tracking with custom SVG charts
-- **AI Assistant**: OpenAI-powered chatbot for fitness and nutrition guidance
+- **AI Assistant**: OpenAI-powered chatbot for fitness and nutrition guidance with executable recommendations
 
 ### AI-Powered Features
-- **Smart Chatbot**: OpenAI-powered assistant for fitness and nutrition guidance
+- **Smart Chatbot**: OpenAI-powered assistant with context-aware responses
+  - Automatic meal and workout recommendations in Brazilian Portuguese
+  - Action buttons to instantly add recommended meals/exercises
+  - Intent analysis using AI (no keyword-based detection)
+  - Structured JSON responses for seamless integration
 - **Profile Generation**: AI-generated personalized fitness profiles based on user data
-- **Intelligent Recommendations**: AI-driven meal and exercise suggestions
+- **Intelligent Recommendations**:
+  - AI-driven meal suggestions with specific Brazilian recipes (e.g., "Arroz com Frango Grelhado")
+  - Personalized workout recommendations based on user goals
+  - Real-time recommendation execution from chatbot interface
+  - Automatic data refresh when navigating between screens
 
 ### Admin Panel
 - **User Management**: View, create, edit, and delete user accounts with age and sex fields
@@ -28,19 +50,42 @@ A comprehensive full-stack fitness management platform with AI-powered features,
 - **Framework**: Spring Boot 3.5.4 with Java 21
 - **Database**: MongoDB with Spring Data
 - **Security**: JWT-based authentication with role-based access control
-- **AI Integration**: OpenAI GPT integration for intelligent features
+- **AI Integration**:
+  - OpenAI GPT integration with AI-based intent detection
+  - Structured recommendation generation with Jackson ObjectMapper
+  - Support for meal and workout recommendations in Brazilian Portuguese
+  - Custom DTOs: RecommendationAction, MealRecommendationData, WorkoutRecommendationData
 - **API Documentation**: Swagger/OpenAPI 3.0
-- **Rate Limiting**: Built-in rate limiting for API protection
+- **Rate Limiting**:
+  - Built-in rate limiting for API protection
+  - 20 recommendations per hour per user
+  - Custom exception handling (RateLimitException)
+- **Error Handling**:
+  - Global exception handler with detailed responses
+  - Custom exceptions: JsonParsingException, RecommendationException
+  - Improved logging and debugging capabilities
 
 ### Frontend
 - **Admin Panel (Angular 20)**: Manage users, data, and system settings
-- **App (Expo/React Native Web)**: End-user experience with USDA food database integration, custom weight charts, and AI assistant
+- **App (Expo/React Native Web)**: Enhanced end-user experience with:
+  - USDA food database integration with intelligent caching
+  - Custom weight charts with SVG rendering
+  - Interactive AI chatbot with action buttons
+  - Daily calorie counter with macronutrient tracking
+  - Real-time data synchronization using useFocusEffect
+  - Auto-refresh on screen navigation
 - **Framework**: Angular 20 with standalone components
 - **UI Library**: Angular Material + TailwindCSS for admin panel, React Native Paper for mobile app
-- **State Management**: Reactive forms and services
+- **State Management**:
+  - Reactive forms and services
+  - UserContext with authentication state
+  - Cross-screen data synchronization
 - **Charts**: Custom SVG-based weight tracking charts
 - **Food Data**: USDA Food Data Central API integration with intelligent caching
-- **Authentication**: JWT-based auth with route guards
+- **Authentication**:
+  - JWT-based auth with route guards
+  - Enhanced middleware with improved auth checks
+  - Automatic token validation
 
 ### Infrastructure
 - **Database**: MongoDB 7.0 with authentication
@@ -159,8 +204,15 @@ The system automatically creates a super admin account on first startup:
 - `DELETE /users/{userId}/measurements/{id}` - Delete measurement
 
 ### AI Features
-- `POST /users/{userId}/chatbot` - Chat with AI assistant
+- `POST /users/{userId}/chatbot` - Chat with AI assistant (returns structured recommendations)
+- `POST /users/{userId}/chatbot/execute` - Execute chatbot recommendations (add meals/workouts)
 - `DELETE /users/{userId}/chatbot/history` - Clear chatbot history
+
+### AI Recommendations
+- `GET /users/{id}/meal-recommendations` - Get cached meal recommendations
+- `POST /users/{id}/meal-recommendations/generate` - Generate new meal recommendations (AI)
+- `GET /users/{id}/workout-recommendations` - Get cached workout recommendations
+- `POST /users/{id}/workout-recommendations/generate` - Generate new workout recommendations (AI)
 
 ### Logging
 - `GET /logs` - Get system logs (Admin only)
